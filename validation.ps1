@@ -95,6 +95,13 @@ function Step-Build {
         throw "Broken relative links found:`n$($linkErrors -join "`n")"
     }
 
+    $gapMinerSln = Join-Path $repoRoot 'GapMiner.sln'
+    if (Test-Path $gapMinerSln) {
+        Write-Host "Building GapMiner.sln..." -ForegroundColor Gray
+        & dotnet build $gapMinerSln
+        if ($LASTEXITCODE -ne 0) { throw "dotnet build GapMiner.sln failed with exit code $LASTEXITCODE" }
+    }
+
     Write-Host "Build passed." -ForegroundColor Green
 }
 
